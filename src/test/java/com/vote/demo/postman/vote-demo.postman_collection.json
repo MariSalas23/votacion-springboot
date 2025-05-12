@@ -1,0 +1,82 @@
+{
+	"info": {
+		"_postman_id": "330b7880-2ef0-495e-9378-c1486e5c369e",
+		"name": "vote-demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://host.docker.internal:8080/personas",
+					"protocol": "http",
+					"host": ["host.docker.internal"],
+					"port": "8080",
+					"path": ["personas"]
+				},
+				"description": "Obtiene la lista de personas registradas"
+			},
+			"response": []
+		},
+		{
+			"name": "Post data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{ "key": "id", "value": "123", "type": "text" },
+						{ "key": "name", "value": "Ana Perez", "type": "text" },
+						{ "key": "age", "value": "25", "type": "text" },
+						{ "key": "gender", "value": "FEMALE", "type": "text" },
+						{ "key": "alive", "value": "true", "type": "text" }
+					]
+				},
+				"url": {
+					"raw": "http://host.docker.internal:8080/register",
+					"protocol": "http",
+					"host": ["host.docker.internal"],
+					"port": "8080",
+					"path": ["register"]
+				},
+				"description": "Envía un formulario de persona para registrarse"
+			},
+			"response": []
+		}
+	]
+}
