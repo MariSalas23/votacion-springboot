@@ -1,41 +1,93 @@
 package com.vote.demo.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.Test;
-
+import com.vote.demo.dao.PersonDAO;
 import com.vote.demo.model.Gender;
 import com.vote.demo.model.Person;
 import com.vote.demo.model.RegisterResult;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class FakePersonDAO extends PersonDAO {
+    private final Map<Long, Person> people = new HashMap<>();
+
+    @Override
+    public void insert(Person person) {
+        people.put(person.getId(), person);
+    }
+
+    @Override
+    public boolean existsById(long id) {
+        return people.containsKey(id);
+    }
+
+    @Override
+    public List<Person> getAll() {
+        return new ArrayList<>(people.values());
+    }
+
+    public void clear() {
+        people.clear();
+    }
+}
 
 public class RegistryServiceTest {
 
-    private final RegistryService service = new RegistryService();
+    private RegistryService registryService;
+    private FakePersonDAO fakeDao;
 
-    @Test
-    public void testVotanteValido() {
-        Person p = new Person("Laura", 25, Gender.FEMALE, true);
-        RegisterResult result = service.registerVoter(p);
-        assertEquals(RegisterResult.VALID, result);
+    @BeforeEach
+    public void setup() {
+        fakeDao = new FakePersonDAO();
+        registryService = new RegistryService(fakeDao);
     }
 
     @Test
-    public void testMenorDeEdad() {
-        Person p = new Person("Carlos", 15, Gender.MALE, true);
-        RegisterResult result = service.registerVoter(p);
+    public void testRegisterValidPerson() {
+        Person p = new Person(1L, "Pedro Gomez", 30, Gender.MALE, true);
+        RegisterResult result = registryService.register(p);
+
+        assertEquals(RegisterResult.VALID, result);
+        assertTrue(fakeDao.existsById(1L));
+    }
+
+    @Test
+    public void testInvalidName() {
+        Person p = new Person(2L, "Ana123", 25, Gender.FEMALE, true);
+        RegisterResult result = registryService.register(p);
+
+        assertEquals(RegisterResult.INVALID, result);
+        assertFalse(fakeDao.existsById(2L));
+    }
+
+    @Test
+    void testUnderagePerson() {
+        Person p = new Person(100L, "Pedro Perez", 17, Gender.MALE, true);
+        RegisterResult result = registryService.register(p);
         assertEquals(RegisterResult.UNDERAGE, result);
     }
 
+
     @Test
-    public void testPersonaMuerta() {
-        Person p = new Person("Ana", 45, Gender.FEMALE, false);
-        RegisterResult result = service.registerVoter(p);
+    public void testDeadPerson() {
+        Person p = new Person(4L, "Laura RIP", 45, Gender.FEMALE, false);
+        RegisterResult result = registryService.register(p);
+
         assertEquals(RegisterResult.DEAD, result);
+        assertFalse(fakeDao.existsById(4L));
     }
 
     @Test
-    public void testMuertoYMenor() {
-        Person p = new Person("Juan", 16, Gender.MALE, false);
-        RegisterResult result = service.registerVoter(p);
-        assertEquals(RegisterResult.DEAD, result); // Se prioriza estado muerto
+    public void testDuplicateId() {
+        Person p1 = new Person(5L, "Carlos Uno", 40, Gender.MALE, true);
+        Person p2 = new Person(5L, "Carlos Dos", 40, Gender.MALE, true);
+        registryService.register(p1);
+        RegisterResult result = registryService.register(p2);
+
+        assertEquals(RegisterResult.INVALID, result);
+        assertEquals(1, fakeDao.getAll().size());
     }
 }

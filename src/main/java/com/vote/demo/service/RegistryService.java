@@ -1,31 +1,32 @@
 package com.vote.demo.service;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
+import com.vote.demo.dao.PersonDAO;
 import com.vote.demo.model.Person;
 import com.vote.demo.model.RegisterResult;
-import com.vote.demo.service.rules.AgeRule;
-import com.vote.demo.service.rules.AliveRule;
-import com.vote.demo.service.rules.ValidationRule;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class RegistryService {
 
-    private final List<ValidationRule> rules = Arrays.asList(
-            new AliveRule(),
-            new AgeRule()
-    );
+    private final PersonDAO dao;
 
-    public RegisterResult registerVoter(Person p) {
-        for (ValidationRule rule : rules) {
-            RegisterResult result = rule.validate(p);
-            if (result != RegisterResult.VALID) {
-                return result;
-            }
-        }
+    public RegistryService(PersonDAO dao) {
+        this.dao = dao;
+    }
+
+    public RegisterResult register(Person p) {
+        if (p.getName() == null || p.getName().isBlank() || !p.getName().matches("[A-Za-z ]+")) return RegisterResult.INVALID;
+        if (p.getAge() < 18) return RegisterResult.UNDERAGE;
+        if (p.getAlive() == null || !p.getAlive()) return RegisterResult.DEAD;
+        if (dao.existsById(p.getId())) return RegisterResult.INVALID;
+
+        dao.insert(p);
         return RegisterResult.VALID;
+    }
+
+    public List<Person> getAllPeople() {
+        return dao.getAll();
     }
 }

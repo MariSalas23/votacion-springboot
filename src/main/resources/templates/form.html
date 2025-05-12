@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Formulario de Registro</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h2>Registro de Persona para Votación</h2>
+
+    <form th:action="@{/register}" th:object="${person}" method="post">
+        <label for="id">Documento (ID):</label>
+        <input type="number" th:field="*{id}" min="1" required/><br><br>
+
+        <label for="name">Nombre:</label>
+        <input type="text" th:field="*{name}" pattern="[A-Za-z ]+" title="Solo letras y espacios" required/><br><br>
+
+        <label for="age">Edad:</label>
+        <input type="number" th:field="*{age}" min="0" required/><br><br>
+
+        <label for="gender">Género:</label>
+        <select th:field="*{gender}" required>
+            <option value="">Seleccione</option>
+            <option value="MALE">Masculino</option>
+            <option value="FEMALE">Femenino</option>
+            <option value="OTHER">Otro</option>
+        </select><br><br>
+
+        <label for="alive">¿Está vivo?</label>
+        <select th:field="*{alive}" required>
+            <option value="">Seleccione</option>
+            <option value="true">Sí</option>
+            <option value="false">No</option>
+        </select>        
+
+        <button type="submit">Registrar</button>
+    </form>
+
+    <p th:text="${message}" style="color:blue; font-weight:bold;"></p>
+</body>
+</html>
