@@ -57,6 +57,11 @@ jobs:
     - name: Instalar Maven
       run: sudo apt-get install -y maven
 
+    - name: Ejecutar app Spring Boot
+      run: |
+        nohup mvn spring-boot:run &  # app activa en segundo plano
+        sleep 20
+
     - name: Pruebas Unitarias y Autónomas
       run: mvn test -Dtest=!RegisterFormGUITest
 
@@ -66,8 +71,11 @@ jobs:
     - name: Copiar logs de JMeter
       run: mvn antrun:run@move-jmeter-logs
 
-    - name: Pruebas API con Postman (Newman via Docker)
-      run: mvn exec:exec@postman-tests
-
     - name: Pruebas GUI con Selenium
       run: mvn test -Dtest=RegisterFormGUITest
+
+    - name: Pruebas API con Postman (Newman via Docker)
+      run: |
+        docker run --network host --rm \
+          -v "${{ github.workspace }}/src/test/java/com/vote/demo/postman:/etc/newman" \
+          postman/newman run /etc/newman/vote-demo.postman_collection.json

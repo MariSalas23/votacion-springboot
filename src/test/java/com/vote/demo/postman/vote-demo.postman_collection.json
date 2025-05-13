@@ -24,7 +24,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://host.docker.internal:8080/personas",
+					"raw": "http://localhost:8080/personas",
 					"protocol": "http",
 					"host": ["host.docker.internal"],
 					"port": "8080",
@@ -68,7 +68,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://host.docker.internal:8080/register",
+					"raw": "http://localhost:8080/register",
 					"protocol": "http",
 					"host": ["host.docker.internal"],
 					"port": "8080",
