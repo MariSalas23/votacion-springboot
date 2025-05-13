@@ -20,14 +20,6 @@ public class RegisterFormGUITest {
 
     private WebDriver driver;
 
-    private void esperarYVerificarMensaje(String esperado) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement message = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("message")));
-        String texto = message.getText();
-        System.out.println("Mensaje recibido: " + texto);
-        assertTrue(texto.contains(esperado), "No se encontró el mensaje esperado: " + esperado);
-    }
-
     @BeforeEach
     void setUp() throws Exception {
         ChromeOptions options = new ChromeOptions();
@@ -37,7 +29,7 @@ public class RegisterFormGUITest {
 
     @Test
     void testRegistroExitoso() {
-        String baseUrl = System.getenv().getOrDefault("VOTEAPP_URL", "http://host.docker.internal:8080/");
+        String baseUrl = System.getenv().getOrDefault("VOTEAPP_URL", "http://localhost:8080/");
         driver.get(baseUrl);
         driver.findElement(By.name("id")).sendKeys(String.valueOf(System.currentTimeMillis()));
         driver.findElement(By.name("name")).sendKeys("Ana Prueba");
@@ -46,6 +38,14 @@ public class RegisterFormGUITest {
         new Select(driver.findElement(By.name("alive"))).selectByValue("true");
         driver.findElement(By.cssSelector("form button[type='submit']")).click();
         esperarYVerificarMensaje("Registro exitoso");
+    }
+
+    private void esperarYVerificarMensaje(String esperado) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement message = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("message")));
+        String texto = message.getText();
+        System.out.println("Mensaje recibido: " + texto);
+        assertTrue(texto.contains(esperado), "No se encontró el mensaje esperado: " + esperado);
     }
 
     @AfterEach
