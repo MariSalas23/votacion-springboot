@@ -1,7 +1,5 @@
 package com.vote.demo.gui;
 
-
-
 import java.net.URL;
 import java.time.Duration;
 
@@ -25,7 +23,7 @@ public class RegisterFormGUITest {
     @BeforeEach
     void setUp() throws Exception {
         ChromeOptions options = new ChromeOptions();
-        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
+        driver = new RemoteWebDriver(new URL("http://localhost:8080/"), options);  // Usar localhost aquí
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
@@ -40,7 +38,7 @@ public class RegisterFormGUITest {
     @Test
     void testRegistroExitoso() {
         long id = System.currentTimeMillis();
-        driver.get("http://host.docker.internal:8080/");
+        driver.get("http://localhost:8080/");  // Usar localhost aquí
         driver.findElement(By.name("id")).sendKeys(String.valueOf(id));
         driver.findElement(By.name("name")).sendKeys("Ana Prueba");
         driver.findElement(By.name("age")).sendKeys("30");

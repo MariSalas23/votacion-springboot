@@ -2,9 +2,9 @@ name: CI para VoteApp
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
@@ -25,8 +25,8 @@ jobs:
 
     - name: Ejecutar app Spring Boot
       run: |
-        nohup mvn spring-boot:run &  # Ejecuta la app en segundo plano
-        sleep 20
+        mvn spring-boot:run &  # Ejecuta la app en segundo plano (sin nohup)
+        sleep 30  # Asegura que Spring Boot esté completamente levantado
         echo "Aplicación en ejecución..."
 
     - name: Compilar proyecto
@@ -59,8 +59,8 @@ jobs:
 
     - name: Ejecutar app Spring Boot
       run: |
-        nohup mvn spring-boot:run &  # App backend activa en segundo plano
-        sleep 20
+        mvn spring-boot:run &  # Ejecuta la app en segundo plano (sin nohup)
+        sleep 30  # Asegura que Spring Boot esté completamente levantado
 
     - name: Pruebas Unitarias y Autónomas
       run: mvn test -Dtest=!RegisterFormGUITest
@@ -72,7 +72,7 @@ jobs:
       run: mvn antrun:run@move-jmeter-logs
 
     - name: Definir URL del backend
-      run: echo "VOTEAPP_URL=http://host.docker.internal:8080/" >> $GITHUB_ENV
+      run: echo "VOTEAPP_URL=http://localhost:8080/" >> $GITHUB_ENV  # Cambié a localhost
 
     - name: Pruebas GUI con Selenium
       run: mvn test -Dtest=RegisterFormGUITest
