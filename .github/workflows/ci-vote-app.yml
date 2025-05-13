@@ -23,8 +23,14 @@ jobs:
     - name: Instalar Maven
       run: sudo apt-get install -y maven
 
-    - name: Compilar proyecto (sin pruebas)
-      run: mvn clean install -DskipTests
+    - name: Ejecutar app Spring Boot
+      run: |
+        nohup mvn spring-boot:run &  # se ejecuta en segundo plano
+        sleep 20                     # espera a que la app inicie
+        echo "Aplicación en ejecución..."
+
+    - name: Compilar proyecto
+      run: mvn clean install
 
   test:
     runs-on: ubuntu-latest
@@ -51,20 +57,17 @@ jobs:
     - name: Instalar Maven
       run: sudo apt-get install -y maven
 
-    - name: Ejecutar pruebas unitarias y autónomas
+    - name: Pruebas Unitarias y Autónomas
       run: mvn test -Dtest=!RegisterFormGUITest
 
-    - name: Ejecutar pruebas GUI con Selenium
+    - name: Pruebas GUI con Selenium
       run: mvn test -Dtest=RegisterFormGUITest
 
-    - name: Ejecutar pruebas de carga con JMeter
+    - name: Pruebas de carga con JMeter
       run: mvn jmeter:jmeter
 
     - name: Copiar logs de JMeter
       run: mvn antrun:run@move-jmeter-logs
 
-    - name: Ejecutar pruebas de API con Postman
+    - name: Pruebas API con Postman (Newman via Docker)
       run: mvn exec:exec@postman-tests
-
-    - name: Verificación final
-      run: mvn verify
