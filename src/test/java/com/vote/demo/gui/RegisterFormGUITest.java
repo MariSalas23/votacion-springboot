@@ -20,13 +20,6 @@ public class RegisterFormGUITest {
 
     private WebDriver driver;
 
-    @BeforeEach
-    void setUp() throws Exception {
-        ChromeOptions options = new ChromeOptions();
-        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-    }
-
     private void esperarYVerificarMensaje(String esperado) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement message = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("message")));
@@ -35,11 +28,18 @@ public class RegisterFormGUITest {
         assertTrue(texto.contains(esperado), "No se encontró el mensaje esperado: " + esperado);
     }
 
+    @BeforeEach
+    void setUp() throws Exception {
+        ChromeOptions options = new ChromeOptions();
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+    }
+
     @Test
     void testRegistroExitoso() {
-        long id = System.currentTimeMillis();
-        driver.get("http://host.docker.internal:8080/");
-        driver.findElement(By.name("id")).sendKeys(String.valueOf(id));
+        String baseUrl = System.getenv().getOrDefault("VOTEAPP_URL", "http://localhost:8080/");
+        driver.get(baseUrl);
+        driver.findElement(By.name("id")).sendKeys(String.valueOf(System.currentTimeMillis()));
         driver.findElement(By.name("name")).sendKeys("Ana Prueba");
         driver.findElement(By.name("age")).sendKeys("30");
         new Select(driver.findElement(By.name("gender"))).selectByValue("FEMALE");
