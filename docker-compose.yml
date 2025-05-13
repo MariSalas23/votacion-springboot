@@ -1,47 +1,20 @@
-version: '3.8'
-
 services:
   selenium-hub:
     image: selenium/hub:4.21.0
     container_name: selenium-hub
     ports:
-      - "4442:4442"  # WebDriver Event Bus (publish)
-      - "4443:4443"  # WebDriver Event Bus (subscribe)
-      - "4444:4444"  # WebDriver Hub for tests
-    environment:
-      - GRID_MAX_SESSION=5
-      - SE_OPTS="-host 0.0.0.0"  # Permitir que el hub acepte conexiones desde cualquier IP
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"
 
   chrome:
     image: selenium/node-chrome:4.21.0
-    container_name: chrome
     depends_on:
       - selenium-hub
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-      - SE_NODE_MAX_SESSIONS=1
-      - SE_NODE_CHROME=true
-      - SE_GRID_URL=http://selenium-hub:4444/wd/hub
-    ports:
-      - "5900:5900"  # VNC para depuración (si es necesario)
-
-  voteapp:
-    image: your-voteapp-image:latest  # Aquí debes poner la imagen de tu aplicación Spring Boot
-    container_name: voteapp
-    build:
-      context: .
-      dockerfile: Dockerfile  # Si usas un Dockerfile personalizado para tu app Spring Boot
-    ports:
-      - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - VOTEAPP_URL=http://host.docker.internal:8080/
-    depends_on:
-      - selenium-hub
-    networks:
-      - selenium-grid
 
   jmeter:
     image: justb4/jmeter:5.5
@@ -50,11 +23,3 @@ services:
       - ./src/test/java/com/vote/demo/carga:/testplans
     working_dir: /testplans
     entrypoint: ["jmeter", "-n", "-t", "HTTP Request.jmx", "-l", "results.jtl"]
-    depends_on:
-      - selenium-hub
-    networks:
-      - selenium-grid
-
-networks:
-  selenium-grid:
-    driver: bridge

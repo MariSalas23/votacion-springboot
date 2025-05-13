@@ -62,9 +62,6 @@ jobs:
         nohup mvn spring-boot:run &  # App backend activa en segundo plano
         sleep 20
 
-    - name: Definir URL del backend
-      run: echo "VOTEAPP_URL=http://host.docker.internal:8080/" >> $GITHUB_ENV
-
     - name: Pruebas Unitarias y Autónomas
       run: mvn test -Dtest=!RegisterFormGUITest
 
@@ -73,6 +70,9 @@ jobs:
 
     - name: Copiar logs de JMeter
       run: mvn antrun:run@move-jmeter-logs
+
+    - name: Definir URL del backend
+      run: echo "VOTEAPP_URL=http://host.docker.internal:8080/" >> $GITHUB_ENV
 
     - name: Pruebas GUI con Selenium
       run: mvn test -Dtest=RegisterFormGUITest
