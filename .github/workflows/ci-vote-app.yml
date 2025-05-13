@@ -1,0 +1,53 @@
+name: CI para VoteApp
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      selenium:
+        image: selenium/standalone-chrome:125.0
+        ports:
+          - 4444:4444
+        options: >-
+          --shm-size=2g
+
+    steps:
+    - name: Clonar repositorio
+      uses: actions/checkout@v3
+
+    - name: Configurar Java 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Instalar Maven
+      run: sudo apt-get install -y maven
+
+    - name: Limpiar y construir
+      run: mvn clean install -DskipTests
+
+    - name: Pruebas Unitarias y Autónomas
+      run: mvn test -Dtest=!RegisterFormGUITest
+
+    - name: Pruebas GUI con Selenium
+      run: mvn test -Dtest=RegisterFormGUITest
+
+    - name: Pruebas de carga con JMeter
+      run: mvn jmeter:jmeter
+
+    - name: Copiar logs de JMeter
+      run: mvn antrun:run@move-jmeter-logs
+
+    - name: Pruebas API con Postman (Newman via Docker)
+      run: mvn exec:exec@postman-tests
+
+    - name: Verificación final del build
+      run: mvn verify
