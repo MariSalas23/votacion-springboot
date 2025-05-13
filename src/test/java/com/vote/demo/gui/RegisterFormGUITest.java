@@ -23,7 +23,7 @@ public class RegisterFormGUITest {
     @BeforeEach
     void setUp() throws Exception {
         ChromeOptions options = new ChromeOptions();
-        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options); // Accede al contenedor Selenium
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
@@ -38,7 +38,7 @@ public class RegisterFormGUITest {
     @Test
     void testRegistroExitoso() {
         long id = System.currentTimeMillis();
-        driver.get("http://127.0.0.1:8080/"); // ✅ ¡IMPORTANTE! No usar localhost en contenedores
+        driver.get("http://host.docker.internal:8080/");
         driver.findElement(By.name("id")).sendKeys(String.valueOf(id));
         driver.findElement(By.name("name")).sendKeys("Ana Prueba");
         driver.findElement(By.name("age")).sendKeys("30");
