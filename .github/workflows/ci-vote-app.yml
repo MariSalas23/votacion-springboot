@@ -72,7 +72,7 @@ jobs:
       run: mvn antrun:run@move-jmeter-logs
 
     - name: Definir URL del backend
-      run: echo "VOTEAPP_URL=http://localhost:8080/" >> $GITHUB_ENV
+      run: echo "VOTEAPP_URL=http://host.docker.internal:8080/" >> $GITHUB_ENV
 
     - name: Pruebas GUI con Selenium
       run: mvn test -Dtest=RegisterFormGUITest

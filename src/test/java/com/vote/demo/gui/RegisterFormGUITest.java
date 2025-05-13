@@ -37,7 +37,7 @@ public class RegisterFormGUITest {
 
     @Test
     void testRegistroExitoso() {
-        String baseUrl = System.getenv().getOrDefault("VOTEAPP_URL", "http://localhost:8080/");
+        String baseUrl = System.getenv().getOrDefault("VOTEAPP_URL", "http://host.docker.internal:8080/");
         driver.get(baseUrl);
         driver.findElement(By.name("id")).sendKeys(String.valueOf(System.currentTimeMillis()));
         driver.findElement(By.name("name")).sendKeys("Ana Prueba");
