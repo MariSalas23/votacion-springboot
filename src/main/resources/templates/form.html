@@ -30,11 +30,11 @@
             <option value="">Seleccione</option>
             <option value="true">Sí</option>
             <option value="false">No</option>
-        </select>        
+        </select><br><br>
 
         <button type="submit">Registrar</button>
     </form>
 
-    <p th:text="${message}" style="color:blue; font-weight:bold;"></p>
+    <p id="message" th:if="${message}" th:text="${message}" style="color:blue; font-weight:bold;"></p>
 </body>
 </html>
