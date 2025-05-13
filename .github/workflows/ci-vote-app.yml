@@ -31,7 +31,7 @@ jobs:
 
     - name: Compilar proyecto
       run: mvn clean install -DskipTests=true "-Dskip.jmeter=true" "-Dskip.postman=true"
-      
+
   test:
     runs-on: ubuntu-latest
     needs: build
@@ -60,6 +60,9 @@ jobs:
     - name: Pruebas Unitarias y Autónomas
       run: mvn test -Dtest=!RegisterFormGUITest
 
+    - name: Pruebas API con Postman (Newman via Docker)
+      run: mvn exec:exec@postman-tests
+
     - name: Pruebas GUI con Selenium
       run: mvn test -Dtest=RegisterFormGUITest
 
@@ -68,6 +71,3 @@ jobs:
 
     - name: Copiar logs de JMeter
       run: mvn antrun:run@move-jmeter-logs
-
-    - name: Pruebas API con Postman (Newman via Docker)
-      run: mvn exec:exec@postman-tests
