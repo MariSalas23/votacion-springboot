@@ -38,15 +38,18 @@ public class RegisterFormGUITest {
     @Test
     void testRegistroExitoso() {
         long id = System.currentTimeMillis();
-        driver.get("http://host.docker.internal:8080/");
+        driver.get("http://localhost:8080/");
         driver.findElement(By.name("id")).sendKeys(String.valueOf(id));
         driver.findElement(By.name("name")).sendKeys("Ana Prueba");
         driver.findElement(By.name("age")).sendKeys("30");
+        
         new Select(driver.findElement(By.name("gender"))).selectByValue("FEMALE");
         new Select(driver.findElement(By.name("alive"))).selectByValue("true");
+
         driver.findElement(By.cssSelector("form button[type='submit']")).click();
         esperarYVerificarMensaje("Registro exitoso");
     }
+
 
     @AfterEach
     void tearDown() {
