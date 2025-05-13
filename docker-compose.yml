@@ -1,20 +1,25 @@
+version: '3.8'
+
 services:
   selenium-hub:
     image: selenium/hub:4.21.0
     container_name: selenium-hub
     ports:
-      - "4442:4442"
-      - "4443:4443"
-      - "4444:4444"
+      - "4442:4442"  # WebDriver Event Bus (publish)
+      - "4443:4443"  # WebDriver Event Bus (subscribe)
+      - "4444:4444"  # WebDriver Hub for tests
 
   chrome:
     image: selenium/node-chrome:4.21.0
+    container_name: chrome
     depends_on:
       - selenium-hub
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    ports:
+      - "5900:5900"  # VNC for debugging
 
   jmeter:
     image: justb4/jmeter:5.5
@@ -23,3 +28,5 @@ services:
       - ./src/test/java/com/vote/demo/carga:/testplans
     working_dir: /testplans
     entrypoint: ["jmeter", "-n", "-t", "HTTP Request.jmx", "-l", "results.jtl"]
+    depends_on:
+      - selenium-hub
