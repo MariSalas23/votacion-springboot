@@ -1,5 +1,11 @@
 HELP.md
+# Ignorar la carpeta target que contiene los archivos de construcción generados por Maven
 target/
+build/
+!target/demo-0.0.1-SNAPSHOT.jar
+
+
+# Directorios de compilación y archivos generados
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -34,13 +40,6 @@ build/
 
 # Java
 *.class
-
-# Maven
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-release.properties
 
 # IDEs
 *.iml

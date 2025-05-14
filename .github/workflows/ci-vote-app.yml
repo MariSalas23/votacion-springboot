@@ -1,4 +1,4 @@
-name: CI para VoteApp
+name: CI/CD para VoteApp
 
 on:
   push:
@@ -41,8 +41,7 @@ jobs:
         image: selenium/standalone-chrome:125.0
         ports:
           - 4444:4444
-        options: >-
-          --shm-size=2g
+        options: --shm-size=2g
 
     steps:
     - name: Clonar repositorio
@@ -56,6 +55,9 @@ jobs:
 
     - name: Instalar Maven
       run: sudo apt-get install -y maven
+
+    - name: Configurar Docker
+      uses: docker/setup-buildx-action@v2
 
     - name: Ejecutar app Spring Boot
       run: |
@@ -71,14 +73,27 @@ jobs:
     - name: Copiar logs de JMeter
       run: mvn antrun:run@move-jmeter-logs
 
-    #- name: Pruebas GUI con Selenium
-    #  run: mvn test -Dtest=RegisterFormGUITest
+    # Pruebas GUI con Selenium están comentadas
+    # - name: Pruebas GUI con Selenium
+    #   run: mvn test -Dtest=RegisterFormGUITest
 
-    #- name: Definir URL del backend
-    #  run: echo "VOTEAPP_URL=http://springboot:8080/" >> $GITHUB_ENV
+    # Definición de URL del backend comentada
+    # - name: Definir URL del backend
+    #   run: echo "VOTEAPP_URL=http://springboot-app:8080/" >> $GITHUB_ENV
 
+    # Pruebas API con Postman (Newman via Docker) comentadas
     # - name: Pruebas API con Postman (Newman via Docker)
-    #  run: |
-    #    docker run --network host --rm \
-    #      -v "${{ github.workspace }}/src/test/java/com/vote/demo/postman:/etc/newman" \
-    #      postman/newman run /etc/newman/vote-demo.postman_collection.json
+    #   run: |
+    #     docker run --rm \
+    #       -v "${{ github.workspace }}/src/test/java/com/vote/demo/postman:/etc/newman" \
+    #       postman/newman run /etc/newman/vote-demo.postman_collection.json
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - name: Desplegar en Vercel
+      run: |
+        curl -X POST https://api.vercel.com/v12/deployments \
+          -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+          -d '{"name":"your-project-name","gitSource":{"type":"github","repoId":"your-repository-id","branch":"main"}}'
