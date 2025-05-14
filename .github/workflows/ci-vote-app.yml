@@ -45,22 +45,6 @@ jobs:
           --shm-size=2g
 
     steps:
-    - name: Clonar repositorio
-      uses: actions/checkout@v3
-
-    - name: Configurar Java 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-
-    - name: Instalar Maven
-      run: sudo apt-get install -y maven
-
-    - name: Ejecutar app Spring Boot
-      run: |
-        nohup mvn spring-boot:run &  # App backend activa en segundo plano
-        sleep 30  # Asegura que Spring Boot esté completamente levantado
 
     - name: Pruebas Unitarias y Autónomas
       run: mvn test -Dtest=!RegisterFormGUITest
