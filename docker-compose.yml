@@ -79,9 +79,9 @@ services:
     container_name: postgres-db
     restart: always
     environment:
-      POSTGRES_DB: votacion
-      POSTGRES_USER: votante
-      POSTGRES_PASSWORD: secret123
+      POSTGRES_DB: vote_fs3r
+      POSTGRES_USER: vote_fs3r_user
+      POSTGRES_PASSWORD: SVvs76gutB61D568xOPg3AAoiN8lin7q
     ports:
       - "5432:5432"
     volumes:

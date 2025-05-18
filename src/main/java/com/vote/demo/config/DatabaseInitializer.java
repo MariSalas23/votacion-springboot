@@ -30,10 +30,10 @@ public class DatabaseInitializer {
                 );
             """;
             stmt.execute(sql);
-            System.out.println("✅ Tabla 'person' creada/verificada en PostgreSQL");
+            System.out.println("Tabla 'person' creada/verificada en PostgreSQL");
 
         } catch (Exception e) {
-            System.err.println("❌ Error creando/verificando tabla en PostgreSQL:");
+            System.err.println("Error creando/verificando tabla en PostgreSQL:");
             e.printStackTrace();
         }
     }

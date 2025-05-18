@@ -46,10 +46,10 @@ public class PersonDAO {
             pstmt.setString(4, person.getGender().toString());
             pstmt.setBoolean(5, person.getAlive());
             pstmt.executeUpdate();
-            System.out.println("✅ Persona insertada: " + person.getId());
+            System.out.println("Persona insertada: " + person.getId());
 
         } catch (SQLException e) {
-            System.err.println("❌ Error al insertar persona:");
+            System.err.println("Error al insertar persona:");
             e.printStackTrace();
         }
     }
@@ -73,7 +73,7 @@ public class PersonDAO {
             }
 
         } catch (SQLException e) {
-            System.err.println("❌ Error al obtener personas:");
+            System.err.println("Error al obtener personas:");
             e.printStackTrace();
         }
 
@@ -90,7 +90,7 @@ public class PersonDAO {
             return rs.next();
 
         } catch (SQLException e) {
-            System.err.println("❌ Error al verificar ID:");
+            System.err.println("Error al verificar ID:");
             e.printStackTrace();
             return false;
         }
