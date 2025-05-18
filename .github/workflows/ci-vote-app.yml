@@ -116,11 +116,11 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.login=$SONAR_TOKEN
 
-    - name: Subir resultados de Allure
-      uses: actions/upload-artifact@v3
+    - name: Subir reporte HTML de Allure
+      uses: actions/upload-artifact@v4
       with:
-        name: allure-results
-        path: target/allure-results
+        name: allure-report
+        path: target/allure-report
 
     - name: Subir reporte HTML de Allure
       run: mkdir -p target/allure-report
