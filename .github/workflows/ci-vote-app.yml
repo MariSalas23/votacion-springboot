@@ -103,11 +103,11 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Ejecutar pruebas para Allure + Coverage
-        run: mvn clean verify
+      - name: Pruebas Unitarias y Autónomas (sin GUI)
+        run: mvn test -Dtest=!RegisterFormGUITest
 
-      - name: Generar reporte HTML de Allure
-        run: mvn io.qameta.allure:allure-maven:report
+      - name: Pruebas de carga con JMeter
+        run: mvn jmeter:jmeter
 
       - name: SonarCloud - Análisis estático
         env:
@@ -124,6 +124,9 @@ jobs:
         with:
           name: allure-results
           path: target/allure-results
+
+      - name: Generar HTML de Allure
+        run: mvn io.qameta.allure:allure-maven:report
 
       - name: Subir reporte HTML de Allure
         uses: actions/upload-artifact@v4
