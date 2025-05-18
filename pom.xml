@@ -177,6 +177,12 @@
         </executions>
       </plugin>
 
+      <plugin>
+        <groupId>org.sonarsource</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+           <version>3.9.0.2155</version> <!-- Verifica la última versión -->
+      </plugin>
+
     </plugins>
   </build>
 
