@@ -1,11 +1,12 @@
 package com.vote.demo.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.vote.demo.dao.PersonDAO;
 import com.vote.demo.model.Person;
 import com.vote.demo.model.RegisterResult;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class RegistryService {
