@@ -167,7 +167,7 @@ Al ejecutar el programa, deberías ver la siguiente salida:
 [WARNING] Parameter 'skip' is unknown for plugin 'jmeter-maven-plugin:3.4.0:configure (configuration)'
 [WARNING] Parameter 'logRootDirectory' is unknown for plugin 'jmeter-maven-plugin:3.4.0:configure (configuration)'
 [WARNING] Parameter 'jmeterLogFilename' is unknown for plugin 'jmeter-maven-plugin:3.4.0:configure (configuration)'
-[INFO]
+[INFO] 
 [INFO] >>> spring-boot:3.4.5:run (default-cli) > test-compile @ demo >>>
 [INFO] 
 [INFO] --- resources:3.3.1:resources (default-resources) @ demo ---
@@ -188,11 +188,11 @@ Al ejecutar el programa, deberías ver la siguiente salida:
 [INFO] Generating JSON Test config...
 [INFO] Configuring JMeter artifacts...
 [INFO] Populating JMeter directory...
-[INFO] Copying extensions to C:\Users\marim\PARCIAL 3\demo\target\2f0b36d2-867f-4858-b162-837454bed83e\jmeter\lib\ext 
+[INFO] Copying extensions to C:\Users\marim\PARCIAL 3\demo\target\3b561a41-2ff2-4680-b68b-027e0446f8c3\jmeter\lib\ext 
 Downloading dependencies: true
-[INFO] Copying junit libraries to C:\Users\marim\PARCIAL 3\demo\target\2f0b36d2-867f-4858-b162-837454bed83e\jmeter\lib\junit
+[INFO] Copying junit libraries to C:\Users\marim\PARCIAL 3\demo\target\3b561a41-2ff2-4680-b68b-027e0446f8c3\jmeter\lib\junit
 Downloading dependencies: true
-[INFO] Copying test plan libraries to C:\Users\marim\PARCIAL 3\demo\target\2f0b36d2-867f-4858-b162-837454bed83e\jmeter\lib
+[INFO] Copying test plan libraries to C:\Users\marim\PARCIAL 3\demo\target\3b561a41-2ff2-4680-b68b-027e0446f8c3\jmeter\lib
 Downloading dependencies: true
 [INFO] Configuring JMeter properties...
 [INFO] 
@@ -215,18 +215,23 @@ Downloading dependencies: true
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
 
-  :: Spring Boot ::                (v3.4.5)
+ :: Spring Boot ::                (v3.4.5)
 
-2025-05-18T12:28:30.680-05:00  INFO 32580 --- [demo] [           main] com.vote.demo.DemoApplication            : Starting DemoApplication using Java 17.0.14 with PID 32580 (C:\Users\marim\PARCIAL 3\demo\target\classes started by marim in C:\Users\marim\PARCIAL 3\demo)
-2025-05-18T12:28:30.683-05:00  INFO 32580 --- [demo] [           main] com.vote.demo.DemoApplication            : No active profile set, falling back to 1 default profile: "default"
-2025-05-18T12:28:32.488-05:00  INFO 32580 --- [demo] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2025-05-18T12:28:32.524-05:00  INFO 32580 --- [demo] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2025-05-18T12:28:32.524-05:00  INFO 32580 --- [demo] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]      
-2025-05-18T12:28:32.693-05:00  INFO 32580 --- [demo] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2025-05-18T12:28:32.699-05:00  INFO 32580 --- [demo] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1898 ms
-? Tabla 'person' verificada o creada en votantes.db
-2025-05-18T12:28:33.655-05:00  INFO 32580 --- [demo] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2025-05-18T12:28:33.670-05:00  INFO 32580 --- [demo] [           main] com.vote.demo.DemoApplication            : Started DemoApplication in 3.906 seconds (process running for 4.681)
+2025-05-18T16:53:49.990-05:00  INFO 13388 --- [demo] [           main] com.vote.demo.DemoApplication            : Starting DemoApplication using Java 17.0.14 with PID 13388 (C:\Users\marim\PARCIAL 3\demo\target\classes started by marim in C:\Users\marim\PARCIAL 3\demo)
+2025-05-18T16:53:49.995-05:00  INFO 13388 --- [demo] [           main] com.vote.demo.DemoApplication            : No active profile set, falling back to 1 default profile: "default"
+2025-05-18T16:53:51.598-05:00  INFO 13388 --- [demo] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-05-18T16:53:51.625-05:00  INFO 13388 --- [demo] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-18T16:53:51.625-05:00  INFO 13388 --- [demo] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-05-18T16:53:51.770-05:00  INFO 13388 --- [demo] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-18T16:53:51.772-05:00  INFO 13388 --- [demo] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1682 ms
+Tabla 'person' creada/verificada en PostgreSQL
+? Conectando a: jdbc:postgresql://dpg-d0l37rnfte5s7395tia0-a.oregon-postgres.render.com:5432/vote_fs3r
+? Usuario DB: vote_fs3r_user
+2025-05-18T16:53:54.783-05:00  INFO 13388 --- [demo] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-05-18T16:53:54.800-05:00  INFO 13388 --- [demo] [           main] com.vote.demo.DemoApplication            : Started DemoApplication in 5.659 seconds (process running for 6.344)
+2025-05-18T16:54:10.413-05:00  INFO 13388 --- [demo] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-05-18T16:54:10.413-05:00  INFO 13388 --- [demo] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-05-18T16:54:10.416-05:00  INFO 13388 --- [demo] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
 ```
 
 Al ingresar el comando establecidos para las pruebas, deberías ver la siguiente salida:
