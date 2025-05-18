@@ -35,7 +35,7 @@ demo
 │   └── maven-wrapper.properties        # Configuración del wrapper de Maven
 ├── docker-compose.yml                  # Definición de contenedores (Selenium, SonarQube, etc.)
 ├── pom.xml                             # Configuración del proyecto Maven (dependencias, plugins, etc.)
-├── personas.db                         # Base de datos
+├── .env                                # Configuración para correr el proyecto
 ├── README.md                           # Documentación del proyecto
 ├── vercel.json                         # Configuración para despliegue en Vercel (opcional)
 ├── src
