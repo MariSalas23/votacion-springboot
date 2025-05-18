@@ -12,7 +12,7 @@ services:
     environment:
       CHECK_RESULTS_EVERY_SECONDS: 3
       KEEP_HISTORY: 1
-      
+
   selenium-hub:
     image: selenium/hub:4.21.0
     container_name: selenium-hub
@@ -74,10 +74,26 @@ services:
     networks:
       - selenium-network
 
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_DB: votacion
+      POSTGRES_USER: votante
+      POSTGRES_PASSWORD: secret123
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - selenium-network
+
 volumes:
   sonarqube_data:
   sonarqube_extensions:
   sonarqube_bundled_plugins:
+  pgdata:
 
 networks:
   selenium-network:
