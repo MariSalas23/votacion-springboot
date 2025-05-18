@@ -8,7 +8,7 @@
 
 ## Descripción del Desarrollo del Software 
 
-Se implementa una arquitectura monolítica, donde todos los componentes del sistema, incluyendo la interfaz de usuario, la lógica de negocio y el acceso a datos, están integrados en una única aplicación desplegable. Esta arquitectura permite una integración sencilla de todos los componentes (interfaz, lógica, persistencia), lo que facilita el desarrollo, la depuración y el despliegue. Al mantener todo en un solo módulo, se reduce la complejidad de configuración y orquestación, lo cual resulta ideal para equipos pequeños o en entornos académicos.
+Se implementa una arquitectura monolítica, donde todos los componentes del sistema, incluyendo la interfaz de usuario, la lógica de negocio y el acceso a datos, están integrados en una única aplicación desplegable. Esta arquitectura permite una integración sencilla de todos los componentes, lo que facilita el desarrollo, la depuración y el despliegue. Al mantener todo en un solo módulo, se reduce la complejidad de configuración y orquestación, lo cual resulta ideal para equipos pequeños o en entornos académicos.
 
 Respecto al patrón de diseño, se implementa el patrón de diseño DAO (Data Access Object) para separar claramente la lógica de acceso a la base de datos del resto de la aplicación de la siguiente manera:
 - **PersonDAO.java:** Encapsula toda la lógica de persistencia en SQLite, incluyendo inserción, consulta y verificación de personas mediante SQL.
@@ -253,7 +253,8 @@ Al abrir los respectivos localhost, deberían aparecer las siguientes salidas:
 
 ### Pruebas Unitarias
 
-Estas pruebas se realizaron con JUnitA continuación, se muestran los resultados que se deberían ver de las pruebas.
+Estas pruebas se realizaron con JUnit para garantizar que los componentes funcionen correctamente
+a nivel de unidad. A continuación, se muestran los resultados que se deberían ver de las pruebas.
 
 ```Powershell
 [INFO] -------------------------------------------------------
@@ -264,16 +265,98 @@ Estas pruebas se realizaron con JUnitA continuación, se muestran los resultados
 [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.06 s - in com.vote.demo.service.RegistryServiceTest
 ```
 
+### Pruebas Autónomas
+
+Estas pruebas se realizaron con Mockito para simular las dependencias externas. A continuación, se muestran los resultados que se deberían ver de las pruebas.
+
+```Powershell
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.vote.demo.controller.RegistryControllerTest
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.788 s - in com.vote.demo.controller.RegistryControllerTest
+```
+
+### Pruebas de Carga
+
+Estas pruebas se realizaron con Apache JMeter para simular cargas de trabajo realistas y medir el rendimiento del sistema bajo diferentes condiciones. A continuación, se muestran los resultados que se deberían ver de las pruebas en el archivo 20250518-HTTP Request.csv, generado en la ruta \target\jmeter\results\20250518-HTTP Request.csv.
+
+```20250518-HTTP Request.csv
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1747587426188,225,HTTP Request,200,,Thread Group 1-47,text,true,,1758,265,76,76,http://localhost:8080/register,220,0,148
+1747587426190,223,HTTP Request,200,,Thread Group 1-41,text,true,,1758,265,76,76,http://localhost:8080/register,215,0,150
+1747587426190,223,HTTP Request,200,,Thread Group 1-13,text,true,,1758,265,75,75,http://localhost:8080/register,220,0,153
+1747587426190,223,HTTP Request,200,,Thread Group 1-25,text,true,,1758,265,75,75,http://localhost:8080/register,220,0,134
+1747587426335,78,HTTP Request,200,,Thread Group 1-71,text,true,,1758,265,75,75,http://localhost:8080/register,71,0,5
+1747587426188,225,HTTP Request,200,,Thread Group 1-3,text,true,,1758,265,75,75,http://localhost:8080/register,218,0,155
+1747587426190,222,HTTP Request,200,,Thread Group 1-35,text,true,,1758,265,75,75,http://localhost:8080/register,215,0,155
+1747587426233,180,HTTP Request,200,,Thread Group 1-58,text,true,,1758,265,75,75,http://localhost:8080/register,171,0,88
+1747587426190,222,HTTP Request,200,,Thread Group 1-34,text,true,,1758,265,75,75,http://localhost:8080/register,213,0,129
+```
+### Pruebas de Interfaz Gráfica (GUI)
+
+Estas pruebas se realizaron con Selenium para automatizar pruebas de la interfaz gráfica, verificando la correcta interacción del usuario con la aplicación. A continuación, se muestran los resultados que se deberían ver de las pruebas.
+
+```Powershell
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.vote.demo.gui.RegisterFormGUITest
+may 18, 2025 11:56:43 A. M. org.openqa.selenium.remote.tracing.opentelemetry.OpenTelemetryTracer createTracer
+INFORMACIÓN: Using OpenTelemetry for tracing
+Mensaje recibido: Registro exitoso. ¡Puede votar!
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.576 s - in com.vote.demo.gui.RegisterFormGUITest
+[INFO] 
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0
+```
+
+### Pruebas de API
+
+Estas pruebas se realizaron con Newman y Postman para probar sus APIs y servicios REST. A continuación, se muestran los resultados que se deberían ver de las pruebas.
+
+```Powershell
+[INFO] --- exec:3.1.0:exec (postman-tests) @ demo ---
+newman
+
+vote-demo
+
+ÔåÆ Get data
+  GET http://host.docker.internal:8080/personas [200 OK, 3.61kB, 189ms]
+  Ô£ô  Status code is 200
+
+ÔåÆ Post data
+  POST http://host.docker.internal:8080/register [200 OK, 1.75kB, 29ms]
+  Ô£ô  Successful POST request
+```
+
+Utilizando la interfaz gráfica de Postman se vería así:
+
+![Inicio Allure](images/postman.png)
+
 ## Integración Continua y Despliegue Continuo (CI/CD)
 
-.
+Se configura un pipeline de CI/CD que ejecuta automáticamentelas pruebas cada vez que se realice un cambio en el código y que automatiza el despliegue del sistema, por medio de GitHub Actions en este repositorio. Este se encuentra dividido de la siguiente manera:
+
+- **build:** Compilar la app y verificar su ejecución.
+- **test:** Ejecutar pruebas unitarias y de rendimiento. Específicamente, ejecuta pruebas unitarias, autónomas y de carga, copiando los logs de JMeter.
+- **report:** Genera reportes y análisis estático del código con SonarCloud y Allure Report.
+- **deploy:** Desplegar automáticamente la app en Render.
+
+Se muestra la imagen con la evidencia de la correcta configuración del pipeline.
+
+![Pipeline](images/pipeline.png)
 
 ## Análisis de Calidad de Código 
 
-.
+Para mantener la calidad del código, se integra SonarCloud en el pipeline de CI/CD, para realizar análisis de calidad del código, cobertura y detección de vulnerabilidades, dando como resultado la siguiente imagen.
+
+![SonarCloud](images/sonar.png)
 
 ## Reporte de Pruebas
 
-.
+Para generar informes visuales de las pruebas realizadas, se utiliza Allure Report como se describe en la *instrucción 7*. 
 
 ---
