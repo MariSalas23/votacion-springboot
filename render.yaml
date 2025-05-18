@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: voteapp-docker
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: JAVA_VERSION
+        value: 17
+
+
+        
