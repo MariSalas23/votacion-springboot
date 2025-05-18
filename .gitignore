@@ -4,7 +4,6 @@ target/
 build/
 !target/demo-0.0.1-SNAPSHOT.jar
 
-
 # Directorios de compilación y archivos generados
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

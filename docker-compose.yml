@@ -1,5 +1,18 @@
 version: '3'
 services:
+
+  allure:
+    image: frankescobar/allure-docker-service
+    container_name: allure-report
+    ports:
+      - "5050:5050"
+    volumes:
+      - ./target/allure-results:/app/allure-results
+      - ./target/allure-report:/app/allure-report
+    environment:
+      CHECK_RESULTS_EVERY_SECONDS: 3
+      KEEP_HISTORY: 1
+      
   selenium-hub:
     image: selenium/hub:4.21.0
     container_name: selenium-hub
@@ -24,19 +37,6 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
     networks:
       - selenium-network
-
-  springboot:
-    image: my-springboot-app:latest
-    container_name: springboot-app
-    ports:
-      - "8080:8080"
-    networks:
-      - selenium-network
-    environment:
-      - SPRING_PROFILES_ACTIVE=dev
-    depends_on:
-      - selenium-hub
-    command: ["mvn", "spring-boot:run"]
 
   jmeter:
     image: justb4/jmeter:5.5

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
     <title>Formulario de Registro</title>
     <meta charset="UTF-8">
 </head>
@@ -36,5 +37,6 @@
     </form>
 
     <p id="message" th:if="${message}" th:text="${message}" style="color:blue; font-weight:bold;"></p>
+    
 </body>
 </html>
