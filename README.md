@@ -120,7 +120,7 @@ docker ps
 
 4. **Correr el proyecto:**
 ```Powershell
-mvn spring-boot:run
+$env:DB_URL="jdbc:postgresql://dpg-d0l37rnfte5s7395tia0-a.oregon-postgres.render.com:5432/vote_fs3r"; $env:DB_USER="vote_fs3r_user"; $env:DB_PASSWORD="SVvs76gutB61D568xOPg3AAoiN8lin7q"; mvn spring-boot:run
 ```
 
 5. **Correr pruebas:**
