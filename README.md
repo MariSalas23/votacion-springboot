@@ -35,7 +35,7 @@ demo
 │   └── maven-wrapper.properties        # Configuración del wrapper de Maven
 ├── docker-compose.yml                  # Definición de contenedores (Selenium, SonarQube, etc.)
 ├── pom.xml                             # Configuración del proyecto Maven (dependencias, plugins, etc.)
-├── personas.db                         # Base de datos SQLite local
+├── personas.db                         # Base de datos
 ├── README.md                           # Documentación del proyecto
 ├── vercel.json                         # Configuración para despliegue en Vercel (opcional)
 ├── src
@@ -334,7 +334,7 @@ vote-demo
 
 Utilizando la interfaz gráfica de Postman se vería así:
 
-![Inicio Allure](images/postman.png)
+![Postman](images/postman.png)
 
 ## Integración Continua y Despliegue Continuo (CI/CD)
 
