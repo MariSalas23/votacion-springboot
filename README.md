@@ -11,7 +11,7 @@
 Se implementa una arquitectura monolítica, donde todos los componentes del sistema, incluyendo la interfaz de usuario, la lógica de negocio y el acceso a datos, están integrados en una única aplicación desplegable. Esta arquitectura permite una integración sencilla de todos los componentes, lo que facilita el desarrollo, la depuración y el despliegue. Al mantener todo en un solo módulo, se reduce la complejidad de configuración y orquestación, lo cual resulta ideal para equipos pequeños o en entornos académicos.
 
 Respecto al patrón de diseño, se implementa el patrón de diseño DAO (Data Access Object) para separar claramente la lógica de acceso a la base de datos del resto de la aplicación de la siguiente manera:
-- **PersonDAO.java:** Encapsula toda la lógica de persistencia en SQLite, incluyendo inserción, consulta y verificación de personas mediante SQL.
+- **PersonDAO.java:** Encapsula toda la lógica de persistencia en PostgreSQL, incluyendo inserción, consulta y verificación de personas mediante SQL.
 - **RegistryService.java:** Aplica reglas de validación sobre los datos (edad, nombre, existencia previa, estado de vida) y delega las operaciones de base de datos al DAO. Esto permite mantener el código modular, reutilizable y fácil de probar.
 
 Finalmente, acerca del patrón arquitectónico seleccionado, el patrón arquitectónico MVC (Modelo - Vista - Controlador) organiza la estructura del proyecto en tres capas bien definidas:
@@ -89,7 +89,7 @@ Este proyecto utiliza dependencias adicionales que deban ser definidas en el arc
 - **Spring Boot Starter Web:** Para construir aplicaciones web REST con Spring MVC.
 - **Spring Boot Starter Thymeleaf:** Para el renderizado de vistas HTML usando el motor de plantillas Thymeleaf.
 - **Spring Boot Starter Test:** Incluye JUnit, Hamcrest, Mockito y más para pruebas unitarias y de integración.
-- **SQLite JDBC:** Conector JDBC para trabajar con bases de datos SQLite.
+- **Postgresql:** Para trabajar con bases de datos PostgreSQL.
 - **Selenium Java:** Para automatización de pruebas GUI en navegadores.
 - **Selenium Remote Driver:** Permite la ejecución remota de pruebas Selenium.
 - **Selenium Support:** Funciones adicionales y utilitarias para pruebas Selenium.
